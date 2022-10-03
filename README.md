@@ -188,4 +188,13 @@ platform-specific.  `capirca_xlate` does not support all of these.  It
 currently supports common features and options, but not vendor- or
 platform-specific features, such as `from-zone` and `to-zone`.
 
+## TODO
+
+* Add a license
+* Add tests
+* Add more examples
+* Show examples of non-YAML source data
+* Show examples of integrating with [`nornir`][nornir]
+
 [capirca]: https://github.com/google/capirca
+[nornir]: https://github.com/nornir-automation/nornir
