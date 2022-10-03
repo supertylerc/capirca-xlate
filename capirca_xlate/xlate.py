@@ -14,7 +14,33 @@ class BaseModel(PydanticBaseModel):
 
 
 class Platform(str, Enum):
+    """A list of supported Capirca Platforms."""
+
+    arista = "arista"
+    aruba = "aruba"
+    brocade = "brocade"
+    cisco = "cisco"
+    ciscoasa = "ciscoasa"
     cisconx = "cisconx"
+    ciscoxr = "ciscoxr"
+    cloudarmor = "cloudarmor"
+    gce = "gce"
+    gcp_hf = "gcp_hf"
+    ipset = "ipset"
+    iptables = "iptables"
+    juniper = "juniper"
+    juniperevo = "juniperevo"
+    junipermsmpc = "junipermsmpc"
+    junipersrx = "junipersrx"
+    k8s = "k8s"
+    nftables = "nftables"
+    nsxv = "nsxv"
+    packetfilter = "packetfilter"
+    paloaltofw = "paloaltofw"
+    pcap = "pcap"
+    speedway = "speedway"
+    srxlo = "srxlo"
+    windows_advfirewall = "windows_advfirewall"
 
 
 class TargetOptions(str, Enum):
