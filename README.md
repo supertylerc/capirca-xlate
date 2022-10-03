@@ -131,6 +131,10 @@ print(capirca_xlate.xlate.xlate_svc(definitions))
 print(capirca_xlate.xlate.xlate_acl(acl))
 ```
 
+You can look at the `acl_schema.yaml` and `definitions_schema.yaml`
+files in this repo to get a better sense of how to structure your data.
+These schemas are updated when the code is updated.
+
 ## Project State and Reasoning
 
 At this time, all functionality should be considered **alpha**.  This
