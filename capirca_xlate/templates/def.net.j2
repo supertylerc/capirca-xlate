@@ -1,0 +1,6 @@
+{% for network in networks -%}
+{{ network.name }} = {{ network.address }}
+{% endfor -%}
+{% for network_reference in network_references -%}
+{{ network_reference.name }} = {{ network_reference.networks | join("\n    ") }}
+{% endfor -%}

@@ -1,0 +1,4 @@
+*.pyc
+.vscode
+.mypy_cache
+*.yml

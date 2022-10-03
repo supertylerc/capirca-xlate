@@ -1,0 +1,6 @@
+{% for service in services -%}
+{{ service.name }} = {{ service.port }}/{{ service.protocol }}
+{% endfor -%}
+{% for service_reference in service_references -%}
+{{ service_reference.name }} = {{ service_reference.services | join("\n    ") }}
+{% endfor -%}

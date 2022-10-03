@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "capirca-xlate"
+version = "0.1.0"
+description = ""
+authors = ["Tyler Christiansen <code@tylerc.me>"]
+readme = "README.md"
+packages = [{include = "capirca_xlate"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+"ruamel.yaml" = "^0.17.21"
+Jinja2 = "^3.1.2"
+
+[tool.poetry.group.dev.dependencies]
+pydantic = "^1.10.2"
+mypy = "^0.971"
+ipython = "^8.5.0"
+black = "^22.8.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,29 @@
+header {
+  {% for comment in acl.comment.split("\n") -%}
+  {% if comment -%}comment:: "{{ comment }}"{% else %}{% endif %}
+  {% endfor -%}
+  {% for target in acl.targets -%}
+  target:: {{ target.platform }} {{ acl.name }}{% if target.options is not none %} {{ target.options | join(' ') }}{% endif %}
+  {%- endfor %}
+}
+
+{% for ace in acl.aces -%}
+term {{ ace.name }} {
+  {% for comment in ace.comment.split("\n") -%}
+  comment:: "{{ comment }}"
+  {% endfor -%}
+  {% if ace.destination_addresses is not none -%}
+  destination-address:: {{ ace.destination_addresses | join(' ') }}
+  {% endif -%}
+  {% if ace.destination_ports is not none -%}
+  destination-port:: {{ ace.destination_ports | join(' ') }}
+  {% endif -%}
+  {% if ace.protocols is not none -%}
+  protocol:: {{ ace.protocols | join(' ') }}
+  {% endif -%}
+  {% if ace.options is not none -%}
+  option:: {{ ace.options | join(' ') }}
+  {% endif -%}
+  action:: {{ ace.action }}
+}
+{% endfor -%}
