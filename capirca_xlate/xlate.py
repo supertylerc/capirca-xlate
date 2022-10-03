@@ -95,6 +95,14 @@ class Service(BaseModel):
     protocol: Protocol
     port: int
 
+    @validator("port")
+    def port_must_be_between_1_and_256(cls, v: int) -> int:
+        if v < 1 or v > 65535:
+            raise ValueError(
+                f"Port must be between 1 and 65535: {v} is outside of range"
+            )
+        return v
+
 
 class Network(BaseModel):
     name: str
@@ -118,7 +126,9 @@ class Definitions(BaseModel):
     network_references: list[NetworkReferences]
 
     @validator("network_references", each_item=True)
-    def network_must_exist(cls, v: NetworkReferences, values: dict[str, Any]):
+    def network_must_exist(
+        cls, v: NetworkReferences, values: dict[str, Any]
+    ) -> NetworkReferences:
         network_names = [n.name for n in values["networks"]]
         network_name_references = [n for n in v.networks]
         for network_name_reference in network_name_references:
@@ -129,7 +139,9 @@ class Definitions(BaseModel):
         return v
 
     @validator("service_references", each_item=True)
-    def service_must_exist(cls, v: ServiceReferences, values: dict[str, Any]):
+    def service_must_exist(
+        cls, v: ServiceReferences, values: dict[str, Any]
+    ) -> ServiceReferences:
         service_names = [s.name for s in values["services"]]
         service_name_references = [s for s in v.services]
         for service_name_reference in service_name_references:
