@@ -199,7 +199,6 @@ platform-specific features, such as `from-zone` and `to-zone`.
 * Add more examples
 * Show examples of non-YAML source data
 * Show examples of integrating with [`nornir`][nornir]
-* Add schema definition
 
 [capirca]: https://github.com/google/capirca
 [nornir]: https://github.com/nornir-automation/nornir
