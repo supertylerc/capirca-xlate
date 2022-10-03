@@ -1,0 +1,114 @@
+definitions:
+  Network:
+    properties:
+      address:
+        anyOf:
+          - format: ipv4network
+            type: string
+          - format: ipv6network
+            type: string
+        description: The IPv4 or IPv6 network.  Must be a valid IPv4 or IPv6 network in CIDR notation.
+        title: Address
+      name:
+        description: The human-friendly, Capirca-referenced name of a CIDR.
+        title: Name
+        type: string
+    required:
+      - name
+      - address
+    title: Network
+    type: object
+  NetworkReferences:
+    properties:
+      name:
+        description: The human-friendly, Capirca-referenced name of a list of networks.
+        title: Name
+        type: string
+      networks:
+        description: A list of service names which will be recursively resolved by Capirca.
+        items:
+          type: string
+        title: Networks
+        type: array
+    required:
+      - name
+      - networks
+    title: NetworkReferences
+    type: object
+  Protocol:
+    description: A list of IP protocols supported by ACLs.
+    enum:
+      - tcp
+      - udp
+      - icmp
+    title: Protocol
+    type: string
+  Service:
+    properties:
+      name:
+        description: The human-friendly, Capirca-referenced name of a service.
+        title: Name
+        type: string
+      port:
+        description: A valid layer 4 port number.  Must be between 1 and 65535.
+        title: Port
+        type: integer
+      protocol:
+        allOf:
+          - $ref: '#/definitions/Protocol'
+        description: A list of IP protocols against which to filter.
+    required:
+      - name
+      - protocol
+      - port
+    title: Service
+    type: object
+  ServiceReferences:
+    properties:
+      name:
+        description: The human-friendly, Capirca-referenced name of a list of services.
+        title: Name
+        type: string
+      services:
+        description: A list of service names which will be recursively resolved by Capirca.
+        items:
+          type: string
+        title: Services
+        type: array
+    required:
+      - name
+      - services
+    title: ServiceReferences
+    type: object
+properties:
+  network_references:
+    description: A list of references to Networks.  The referenced names must all exist.
+    items:
+      $ref: '#/definitions/NetworkReferences'
+    title: Network References
+    type: array
+  networks:
+    description: A list of Capirca Networks.
+    items:
+      $ref: '#/definitions/Network'
+    title: Networks
+    type: array
+  service_references:
+    description: A list of references to Services.  The referenced names must all exist.
+    items:
+      $ref: '#/definitions/ServiceReferences'
+    title: Service References
+    type: array
+  services:
+    description: A list of Capirca Services.
+    items:
+      $ref: '#/definitions/Service'
+    title: Services
+    type: array
+required:
+  - services
+  - networks
+  - service_references
+  - network_references
+title: Definitions
+type: object

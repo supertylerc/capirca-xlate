@@ -1,0 +1,175 @@
+definitions:
+  ACE:
+    description: Parameters that can be used when defining an individual Access Control Entry.
+    properties:
+      action:
+        allOf:
+          - $ref: '#/definitions/Action'
+        description: A Capirca-supported `Action`.
+      comment:
+        description: An ACE comment, usually rendered as a ``remark``.
+        title: Comment
+        type: string
+      destination_addresses:
+        description: A list of Capirca-defined network objects for filtering the destination address.
+        items:
+          type: string
+        title: Destination Addresses
+        type: array
+      destination_excludes:
+        description: A list of Capirca-defined sources to exclude from `ACE.destination_addresses`.
+        items:
+          type: string
+        title: Destination Excludes
+        type: array
+      destination_ports:
+        description: A list of Capirca-defined ports to filter destination ports.
+        items:
+          type: string
+        title: Destination Ports
+        type: array
+      name:
+        description: A reference name for the ACE, usually rendered as a ``remark``.
+        title: Name
+        type: string
+      options:
+        description: A list of additional filtering options, such as TCP Established, for filtering traffic.
+        items:
+          $ref: '#/definitions/Option'
+        type: array
+      protocols:
+        description: A list of IP protocols against which to filter.
+        items:
+          $ref: '#/definitions/Protocol'
+        type: array
+      source_addresses:
+        description: A list of Capirca-defined network objects for filtering the source address.
+        items:
+          type: string
+        title: Source Addresses
+        type: array
+      source_excludes:
+        description: A list of Capirca-defined sources to exclude from `ACE.source_addresses`.
+        items:
+          type: string
+        title: Source Excludes
+        type: array
+      source_ports:
+        description: A list of Capirca-defined ports to filter source ports.
+        items:
+          type: string
+        title: Source Ports
+        type: array
+      ticket:
+        description: A ticket/reference number for tracking/auditing.  This is not used in the final rendered ACL.
+        title: Ticket
+        type: string
+    required:
+      - action
+      - name
+    title: ACE
+    type: object
+  Action:
+    description: A list of actions an ACL can take that are supported by Capirca.
+    enum:
+      - accept
+      - deny
+      - reject
+      - next
+      - reject-with-tcp-rst
+    title: Action
+    type: string
+  Option:
+    description: A list of protocol-level additional options supported by Capirca.
+    enum:
+      - tcp-established
+      - established
+    title: Option
+    type: string
+  Platform:
+    description: A list of supported Capirca Platforms.
+    enum:
+      - arista
+      - aruba
+      - brocade
+      - cisco
+      - ciscoasa
+      - cisconx
+      - ciscoxr
+      - cloudarmor
+      - gce
+      - gcp_hf
+      - ipset
+      - iptables
+      - juniper
+      - juniperevo
+      - junipermsmpc
+      - junipersrx
+      - k8s
+      - nftables
+      - nsxv
+      - packetfilter
+      - paloaltofw
+      - pcap
+      - speedway
+      - srxlo
+      - windows_advfirewall
+    title: Platform
+    type: string
+  Protocol:
+    description: A list of IP protocols supported by ACLs.
+    enum:
+      - tcp
+      - udp
+      - icmp
+    title: Protocol
+    type: string
+  Target:
+    description: A combination of `Platform` and `TargetOptions` for defining a target platform.
+    properties:
+      options:
+        items:
+          $ref: '#/definitions/TargetOptions'
+        type: array
+      platform:
+        $ref: '#/definitions/Platform'
+    required:
+      - platform
+    title: Target
+    type: object
+  TargetOptions:
+    description: A list of extra options supported by Capirca's ``target`` param.
+    enum:
+      - extended
+      - object-group
+      - inet6
+      - mixed
+    title: TargetOptions
+    type: string
+properties:
+  aces:
+    description: A list of Access Control Entries.
+    items:
+      $ref: '#/definitions/ACE'
+    title: Aces
+    type: array
+  comment:
+    description: A comment explaining the purpose of the ACL, usually rendered as a ``remark``.
+    title: Comment
+    type: string
+  name:
+    description: The name of the ACL.
+    title: Name
+    type: string
+  targets:
+    description: A list of Capirca Targets for which to render the ACL.
+    items:
+      $ref: '#/definitions/Target'
+    title: Targets
+    type: array
+required:
+  - name
+  - aces
+  - targets
+title: ACL
+type: object
