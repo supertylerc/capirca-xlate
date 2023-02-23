@@ -1,4 +1,5 @@
 *.pyc
 .vscode
 .mypy_cache
-*.yml
+def.yml
+example.yml

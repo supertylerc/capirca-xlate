@@ -1,0 +1,65 @@
+---
+name: Run Tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  tests:
+    name: Tests on ${{ matrix.python-version }}
+    env:
+      USING_COVERAGE: 3.10,3.11
+    strategy:
+      matrix:
+        python-version:
+          - "3.10"
+          - "3.11"
+        os:
+          - "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: poetry
+      - name: Install dependencies
+        run: poetry install -v
+      - name: Run Tests
+      - run: poetry run pytest --cov --cov-report xml:coverage.xml
+      - name: Get Cover
+        uses: orgoro/coverage@v3
+        with:
+          coverageFile: coverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+  install-test-all-platforms:
+    name: Test Installation on ${{ matrix.os }}, ${{ matrix.python-version }}
+    env:
+      USING_COVERAGE: 3.10,3.11
+    strategy:
+      matrix:
+        python-version:
+          - "3.10"
+          - "3.11"
+        os:
+          - "ubuntu-latest"
+          - "macos-latest"
+          - "windows-latest"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: poetry
+      - name: Install dependencies
+        run: poetry install -v
+      - name: Development Test
+        run: poetry run python -c 'import capirca_xlate.xlate ; print(capirca_xlate.xlate.ACL(name="example",aces=[],targets=[]).dict())'
+
