@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: poetry install -v
       - name: Run Tests
-      - run: poetry run pytest --cov --cov-report xml:coverage.xml
+        run: poetry run pytest --cov --cov-report xml:coverage.xml
       - name: Get Cover
         uses: orgoro/coverage@v3
         with:
