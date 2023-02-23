@@ -11,6 +11,7 @@ on:
 jobs:
   tests:
     name: Tests on ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
     env:
       USING_COVERAGE: 3.10,3.11
     strategy:
@@ -39,8 +40,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
   install-test-all-platforms:
     name: Test Installation on ${{ matrix.os }}, ${{ matrix.python-version }}
-    env:
-      USING_COVERAGE: 3.10,3.11
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         python-version:
