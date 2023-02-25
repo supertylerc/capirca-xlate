@@ -3,3 +3,6 @@
 .mypy_cache
 def.yml
 example.yml
+.coverage
+coverage.xml
+.python-version
