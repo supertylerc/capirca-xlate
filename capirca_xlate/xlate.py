@@ -196,8 +196,8 @@ class Definitions(BaseModel):
     def network_must_exist(
         cls, v: NetworkReferences, values: dict[str, Any]
     ) -> NetworkReferences:
-        network_names = [n.name for n in values["networks"]]
         """Check all defined Networks to ensure that referenced networks exist."""
+        network_names = [n.name for n in values["networks"]]
         network_name_references = [n for n in v.networks]
         for network_name_reference in network_name_references:
             if network_name_reference not in network_names:
